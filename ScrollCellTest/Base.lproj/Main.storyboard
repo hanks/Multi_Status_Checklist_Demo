@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="fBN-KU-pJv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="kvg-Cm-gAH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Custom Table View Controller-->
+        <!--Custom Table View Controller - Multi-Status Checklist-->
         <scene sceneID="N69-bt-Ufd">
             <objects>
                 <tableViewController id="fBN-KU-pJv" customClass="CustomTableViewController" sceneMemberID="viewController">
@@ -14,7 +14,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" id="wbV-O0-dQ8" customClass="CustomCellTableViewCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wbV-O0-dQ8" id="CVo-af-sYp">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -27,8 +27,29 @@
                             <outlet property="delegate" destination="fBN-KU-pJv" id="PPe-yR-qQQ"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Multi-Status Checklist" id="Ux3-87-TZn">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1Zs-n1-AVq"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyz-bb-zOp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="658" y="23"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="l1s-qY-XoH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kvg-Cm-gAH" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P3h-QE-wrW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fBN-KU-pJv" kind="relationship" relationship="rootViewController" id="E1d-qo-6XP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2RX-l9-q88" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="132" y="23"/>
         </scene>
