@@ -1,7 +1,7 @@
 #import "CustomTableViewController.h"
 #import "CustomCellTableViewCell.h"
 
-@interface CustomTableViewController ()
+@interface CustomTableViewController () <CustomCellTableViewCellDelegate>
 
 @property NSMutableArray *_objects;
 
@@ -33,10 +33,9 @@
 
 - (void)loadInitData {
     self._objects = [[NSMutableArray alloc] init];
-    [self._objects addObject:@"Hello"];
-    [self._objects addObject:@"World"];
-    [self._objects addObject:@"You"];
-    NSLog(@"%d", [self._objects count]);
+    for (int i = 0; i < 10; i++) {
+        [self._objects addObject:[NSString stringWithFormat:@"task_%d", i]];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,10 +64,8 @@
 {
     CustomCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
     
-    // Configure the cell...
-    NSLog(@"%@", [self._objects objectAtIndex:indexPath.row]);
     cell.textLabel.text = [self._objects objectAtIndex:indexPath.row];
-    
+    cell.delegate = self;
     return cell;
 }
 
@@ -104,14 +101,12 @@
 }
 */
 
-/*
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
 
 /*
 #pragma mark - Navigation
@@ -123,5 +118,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - CustomCellTableViewCellDelegate Methods
+- (void)cell:(CustomCellTableViewCell *)cell didShowMenu:(BOOL)isShowingMenu {
+    
+}
+
+- (void)cellDidSelectDelete:(CustomCellTableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    [self._objects removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)cellDidSelectCancel:(CustomCellTableViewCell *)cell {
+    
+}
 
 @end
