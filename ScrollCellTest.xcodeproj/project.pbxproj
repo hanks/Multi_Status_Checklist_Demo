@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00AC42D818DC2AB9001BF8F6 /* Checkbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC42D718DC2AB9001BF8F6 /* Checkbox.m */; };
 		00F11A5318D91349008A305E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F11A5218D91349008A305E /* Foundation.framework */; };
 		00F11A5518D91349008A305E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F11A5418D91349008A305E /* CoreGraphics.framework */; };
 		00F11A5718D91349008A305E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F11A5618D91349008A305E /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00AC42D618DC2AB9001BF8F6 /* Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkbox.h; sourceTree = "<group>"; };
+		00AC42D718DC2AB9001BF8F6 /* Checkbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Checkbox.m; sourceTree = "<group>"; };
 		00F11A4F18D91349008A305E /* ScrollCellTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollCellTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F11A5218D91349008A305E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00F11A5418D91349008A305E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,6 +126,8 @@
 				00F11A8B18D913D2008A305E /* CustomTableViewController.m */,
 				00F11A6218D91349008A305E /* AppDelegate.m */,
 				00F11A6418D91349008A305E /* Main.storyboard */,
+				00AC42D618DC2AB9001BF8F6 /* Checkbox.h */,
+				00AC42D718DC2AB9001BF8F6 /* Checkbox.m */,
 				00F11A8718D913A9008A305E /* CustomCellTableViewCell.h */,
 				00F11A8818D913A9008A305E /* CustomCellTableViewCell.m */,
 				00F11A6718D91349008A305E /* ViewController.h */,
@@ -263,6 +268,7 @@
 				00F11A8C18D913D2008A305E /* CustomTableViewController.m in Sources */,
 				00F11A6318D91349008A305E /* AppDelegate.m in Sources */,
 				00F11A8918D913A9008A305E /* CustomCellTableViewCell.m in Sources */,
+				00AC42D818DC2AB9001BF8F6 /* Checkbox.m in Sources */,
 				00F11A5F18D91349008A305E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +474,7 @@
 				00F11A8318D91349008A305E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00F11A8418D91349008A305E /* Build configuration list for PBXNativeTarget "ScrollCellTestTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +483,7 @@
 				00F11A8618D91349008A305E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

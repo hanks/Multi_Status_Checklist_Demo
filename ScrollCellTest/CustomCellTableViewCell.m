@@ -1,16 +1,9 @@
-//
-//  CustomCellTableViewCell.m
-//  ScrollCellTest
-//
-//  Created by 周 涵 on 2014/03/19.
-//  Copyright (c) 2014年 hanks. All rights reserved.
-//
-
 #import "CustomCellTableViewCell.h"
+#import "Checkbox.h"
 
 #define kCatchWidth 148.0f
 
-NSString *const TLSwipeForOptionsCellShouldHideMenuNotification = @"TLSwipeForOptionsCellShouldHideMenuNotification";
+NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMenuNotification";
 
 @interface CustomCellTableViewCell () <UIScrollViewDelegate>
 
@@ -18,9 +11,9 @@ NSString *const TLSwipeForOptionsCellShouldHideMenuNotification = @"TLSwipeForOp
 
 @property (nonatomic, weak) UIView *scrollViewContentView;	//The cell content (like the label) goes in this view.
 @property (nonatomic, weak) UIView *scrollViewButtonView;	//Contains our two buttons
-
 @property (nonatomic, weak) UILabel *scrollViewLabel;
-
+@property (nonatomic, weak) Checkbox *checkbox;
+@property (nonatomic, weak) UIView *checkInfoBGView;
 @property (nonatomic, assign) BOOL isShowingMenu;
 
 @end
@@ -81,11 +74,22 @@ NSString *const TLSwipeForOptionsCellShouldHideMenuNotification = @"TLSwipeForOp
 	[self.scrollView addSubview:scrollViewContentView];
 	self.scrollViewContentView = scrollViewContentView;
 	
-	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectInset(self.scrollViewContentView.bounds, 10.0f, 0.0f)];
+    // check info background view
+    UIView *checkInfoBGView = [[UIView alloc] initWithFrame:CGRectMake(51.0f, 0.0f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    self.checkInfoBGView = checkInfoBGView;
+    [self.scrollViewContentView addSubview:checkInfoBGView];
+    
+    // add label
+	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, 249.0f, 21.0f)];
 	self.scrollViewLabel = scrollViewLabel;
-	[self.scrollViewContentView addSubview:scrollViewLabel];
+	[self.checkInfoBGView addSubview:scrollViewLabel];
+    
+    // add checkbox
+    Checkbox *checkbox = [[Checkbox alloc] initWithFrame:CGRectMake(14.0f, 0.0f, 29.0f, CGRectGetHeight(self.bounds))];
+    self.checkbox = checkbox;
+    [self.scrollViewContentView addSubview:checkbox];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideMenuOptions) name:TLSwipeForOptionsCellShouldHideMenuNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideMenuOptions) name:CustomCellShouldHideMenuNotification object:nil];
 }
 
 - (void)hideMenuOptions {
