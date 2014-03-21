@@ -16,6 +16,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 @property (nonatomic, weak) UIView *checkInfoBGView;
 @property (nonatomic, weak) UIView *comletionLineView;
 @property (nonatomic, assign) BOOL isShowingMenu;
+@property (nonatomic, weak) UIButton *cancelButton;
 
 @end
 
@@ -54,13 +55,14 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	[self.scrollView addSubview:scrollViewButtonView];
 	
 	// Set up our two buttons
-	UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	moreButton.backgroundColor = [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0f];
-	moreButton.frame = CGRectMake(0.0f, 0.0f, kCatchWidth / 2.0f, CGRectGetHeight(self.bounds));
-	[moreButton setTitle:@"Cancel" forState:UIControlStateNormal];
-	[moreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[moreButton addTarget:self action:@selector(userPressedCancelButton:) forControlEvents:UIControlEventTouchUpInside];
-	[self.scrollViewButtonView addSubview:moreButton];
+	UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	cancelButton.backgroundColor = [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0f];
+	cancelButton.frame = CGRectMake(0.0f, 0.0f, kCatchWidth / 2.0f, CGRectGetHeight(self.bounds));
+	[cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+	[cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[cancelButton addTarget:self action:@selector(userPressedCancelButton:) forControlEvents:UIControlEventTouchUpInside];
+	self.cancelButton = cancelButton;
+    [self.scrollViewButtonView addSubview:cancelButton];
 	
 	UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	deleteButton.backgroundColor = [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0f];
@@ -114,6 +116,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 
 - (void)userPressedCancelButton:(id)sender {
     [self.delegate cellDidSelectCancel:self];
+    [self changeCellStatusWithCancelled:!self.checkbox.cancelled];
     [self hideMenuOptions];
 }
 
@@ -149,7 +152,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	}
 }
 
-#pragma mark -- 
+#pragma mark -- CheckboxChangeDelegate Methods
 - (void)changeCellStatusWithChecked:(BOOL)isChecked {
     [self.comletionLineView setHidden:!self.checkbox.checked];
     
@@ -169,7 +172,23 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 }
 
 - (void)changeCellStatusWithCancelled:(BOOL)isCancelled {
+    [self.comletionLineView setHidden:YES];
+    self.checkbox.cancelled = isCancelled;
     
+    if (isCancelled) {
+        // make cell background light yellow
+        [self.checkInfoBGView setBackgroundColor: [UIColor yellowColor]];
+        [self.cancelButton setTitle:@"Restore" forState:UIControlStateNormal];
+    } else {
+        // make cell background white
+        [self.checkInfoBGView setBackgroundColor: [UIColor whiteColor]];
+        
+        // make font normal
+        [self.scrollViewLabel setFont:[UIFont systemFontOfSize:20.0f]];
+        
+        [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+
+    }
 }
 
 
