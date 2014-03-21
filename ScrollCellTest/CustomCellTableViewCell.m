@@ -1,11 +1,11 @@
 #import "CustomCellTableViewCell.h"
 #import "Checkbox.h"
 
-#define kCatchWidth 148.0f
+#define kCatchWidth 188.0f
 
 NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMenuNotification";
 
-@interface CustomCellTableViewCell () <UIScrollViewDelegate>
+@interface CustomCellTableViewCell () <CheckboxChangeDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, weak) UIScrollView *scrollView;
 
@@ -14,6 +14,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 @property (nonatomic, weak) UILabel *scrollViewLabel;
 @property (nonatomic, weak) Checkbox *checkbox;
 @property (nonatomic, weak) UIView *checkInfoBGView;
+@property (nonatomic, weak) UIView *comletionLineView;
 @property (nonatomic, assign) BOOL isShowingMenu;
 
 @end
@@ -56,9 +57,9 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	moreButton.backgroundColor = [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0f];
 	moreButton.frame = CGRectMake(0.0f, 0.0f, kCatchWidth / 2.0f, CGRectGetHeight(self.bounds));
-	[moreButton setTitle:@"More" forState:UIControlStateNormal];
+	[moreButton setTitle:@"Cancel" forState:UIControlStateNormal];
 	[moreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[moreButton addTarget:self action:@selector(userPressedMoreButton:) forControlEvents:UIControlEventTouchUpInside];
+	[moreButton addTarget:self action:@selector(userPressedCancelButton:) forControlEvents:UIControlEventTouchUpInside];
 	[self.scrollViewButtonView addSubview:moreButton];
 	
 	UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,14 +80,23 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
     self.checkInfoBGView = checkInfoBGView;
     [self.scrollViewContentView addSubview:checkInfoBGView];
     
-    // add label
+    // add label to checkInfoBGView
 	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, 249.0f, 21.0f)];
 	self.scrollViewLabel = scrollViewLabel;
+    [self.scrollViewLabel setFont:[UIFont systemFontOfSize:20.0f]];
 	[self.checkInfoBGView addSubview:scrollViewLabel];
     
-    // add checkbox
+    // add completion line to checkInfoBGView
+    UIView *completionLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, 248, 3)];
+    [completionLineView setBackgroundColor:[UIColor grayColor]];
+    [completionLineView setHidden:YES];
+    self.comletionLineView = completionLineView;
+    [self.checkInfoBGView addSubview:completionLineView];
+    
+    // add checkbox to scrollViewContentView
     Checkbox *checkbox = [[Checkbox alloc] initWithFrame:CGRectMake(14.0f, 0.0f, 29.0f, CGRectGetHeight(self.bounds))];
     self.checkbox = checkbox;
+    self.checkbox.delegate = self;
     [self.scrollViewContentView addSubview:checkbox];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideMenuOptions) name:CustomCellShouldHideMenuNotification object:nil];
@@ -100,7 +110,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
     
 }
 
-- (void)userPressedMoreButton:(id)sender {
+- (void)userPressedCancelButton:(id)sender {
     
 }
 
@@ -134,6 +144,29 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 			//[self.delegate cell:self didShowMenu:self.isShowingMenu];
 		}
 	}
+}
+
+#pragma mark -- 
+- (void)changeCellStatusWithChecked:(BOOL)isChecked {
+    [self.comletionLineView setHidden:!self.checkbox.checked];
+    
+    if (isChecked) {
+        // make cell bgcolor gray
+        [self.checkInfoBGView setBackgroundColor:[UIColor lightGrayColor]];
+        
+        // make font Italia
+        [self.scrollViewLabel setFont:[UIFont italicSystemFontOfSize:20.0f]];
+    } else {
+        // make cell background white
+        [self.checkInfoBGView setBackgroundColor: [UIColor whiteColor]];
+        
+        // make font normal
+        [self.scrollViewLabel setFont:[UIFont systemFontOfSize:20.0f]];
+    }
+}
+
+- (void)changeCellStatusWithCancelled:(BOOL)isCancelled {
+    
 }
 
 
