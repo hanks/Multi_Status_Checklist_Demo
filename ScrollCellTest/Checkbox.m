@@ -122,6 +122,10 @@
     if (checked != _checked) {
         _checked = checked;
         
+        if (_checked) {
+            _cancelled = false;
+        }
+        
         // Flag ourself as needing to be redrawn.
         [self setNeedsDisplay];
         [self.delegate changeCellStatusWithChecked:checked];
