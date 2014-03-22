@@ -8,6 +8,7 @@
     if (self) {
         // set white background color
         [self setBackgroundColor:[UIColor whiteColor]];
+        NSLog(@"%f", self.bounds.size.width);
     }
     return self;
 }
@@ -30,12 +31,12 @@
         transform = CGAffineTransformMakeTranslation((self.bounds.size.width - size)/2, 0);
     }
     
+    const CGFloat strokeWidth = 0.068359375f * size;
+    const CGFloat checkBoxInset = 0.171875f * size;
+    CGRect checkboxRect = CGRectMake(checkBoxInset, checkBoxInset, size - checkBoxInset*2, size - checkBoxInset*2);
+    
     // Draw the checkbox
     {
-        const CGFloat strokeWidth = 0.068359375f * size;
-        const CGFloat checkBoxInset = 0.171875f * size;
-        
-        CGRect checkboxRect = CGRectMake(checkBoxInset, checkBoxInset, size - checkBoxInset*2, size - checkBoxInset*2);
         UIBezierPath *checkboxPath = [UIBezierPath bezierPathWithRect:checkboxRect];
         
         [checkboxPath applyTransform:transform];
@@ -95,7 +96,20 @@
     
     // Draw the checkmark if self.cancelled ==YES
     if (self.cancelled) {
-        NSLog(@"Draw cancel mark X");
+        NSLog(@"mark xxxxx");
+        
+        CGContextSetLineWidth(context, 2.0);
+        CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+        CGContextConcatCTM(context, transform);
+        
+        // draw x mark in the checkbox
+        CGContextMoveToPoint(context,
+                             9.0f, 9.0f);
+        CGContextAddLineToPoint(context, 21.0f, 21.0f);
+        CGContextMoveToPoint(context,
+                             9.0f, 21.0f);
+        CGContextAddLineToPoint(context, 21.0f, 9.0f);
+        CGContextStrokePath(context);
     }
     
 #undef P
