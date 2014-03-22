@@ -177,6 +177,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
     
     if (isCancelled) {
         // make cell background light yellow
+        self.checkbox.checked = false;
         [self.checkInfoBGView setBackgroundColor: [UIColor yellowColor]];
         [self.cancelButton setTitle:@"Restore" forState:UIControlStateNormal];
     } else {
