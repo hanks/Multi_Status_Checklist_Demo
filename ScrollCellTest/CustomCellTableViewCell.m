@@ -84,13 +84,13 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
     [self.scrollViewContentView addSubview:checkInfoBGView];
     
     // add label to checkInfoBGView
-	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, CGRectGetWidth(self.bounds) - 51, 21.0f)];
+	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, CGRectGetWidth(self.checkInfoBGView.bounds), 21.0f)];
 	self.scrollViewLabel = scrollViewLabel;
     [self.scrollViewLabel setFont:[UIFont systemFontOfSize:20.0f]];
 	[self.checkInfoBGView addSubview:scrollViewLabel];
     
     // add completion line to checkInfoBGView
-    UIView *completionLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, CGRectGetWidth(self.bounds) - 51, 3)];
+    UIView *completionLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, CGRectGetWidth(self.checkInfoBGView.bounds), 3)];
     [completionLineView setBackgroundColor:[UIColor grayColor]];
     [completionLineView setHidden:YES];
     self.comletionLineView = completionLineView;
