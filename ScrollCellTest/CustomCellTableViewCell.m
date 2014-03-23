@@ -136,8 +136,6 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	if (scrollView.contentOffset.x < 0.0f) {
 		scrollView.contentOffset = CGPointZero;
 	}
-	NSLog(@"scrollView.contentOffset.x = %f", scrollView.contentOffset.x);
-    NSLog(@"CGRectGetWidth(self.bounds = %f", CGRectGetWidth(self.bounds));
 	self.scrollViewButtonView.frame = CGRectMake(scrollView.contentOffset.x + (CGRectGetWidth(self.bounds) - kCatchWidth), 0.0f, kCatchWidth, CGRectGetHeight(self.bounds));
 }
 

@@ -27,9 +27,7 @@
                             <outlet property="delegate" destination="fBN-KU-pJv" id="PPe-yR-qQQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Multi-Status Checklist" id="Ux3-87-TZn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1Zs-n1-AVq"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Multi-Status Checklist" id="Ux3-87-TZn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyz-bb-zOp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

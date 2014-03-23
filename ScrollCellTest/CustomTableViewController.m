@@ -7,6 +7,7 @@
 @property (nonatomic, weak)UIView *progressBarView;
 @property (nonatomic, weak)UILabel *percentageLabel;
 @property (nonatomic, weak)UIView *progressBar;
+@property (nonatomic, weak)UIButton *addNewItemButton;
 
 @property int percentageValue;
 
@@ -38,6 +39,7 @@
 }
 
 - (void)initProgressbarView {
+    // head view for progress bar
     UIView *progressBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), 20)];
     self.progressBarView = progressBarView;
     
@@ -56,6 +58,18 @@
     
     self.tableView.tableHeaderView = self.progressBarView;
     
+    // footer view for add new button
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), 49.0f)];
+    UIButton *addNewItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    addNewItemButton.backgroundColor = [self colorFromHexString:@"#848484"];
+    addNewItemButton.frame = CGRectMake(CGRectGetWidth(self.tableView.bounds) / 3, 0.0f, 100.0f, 49.0f);
+    addNewItemButton.layer.cornerRadius = 20.0f;
+    [addNewItemButton setTitle:@"Add item" forState:UIControlStateNormal];
+    [addNewItemButton setTitleColor:[self colorFromHexString:@"#FFFFFF"] forState:UIControlStateNormal];
+    [addNewItemButton addTarget:self action:@selector(userPressedAddButton:) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:addNewItemButton];
+    self.tableView.tableFooterView = footerView;
+    
 }
 
 - (UIColor *)colorFromHexString:(NSString *)hexString {
@@ -68,9 +82,13 @@
 
 - (void)loadInitData {
     self._objects = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 6; i++) {
         [self._objects addObject:[NSString stringWithFormat:@"task_%d", i]];
     }
+}
+
+- (void)userPressedAddButton:(id)sender {
+    NSLog(@"add new item");
 }
 
 - (void)didReceiveMemoryWarning
