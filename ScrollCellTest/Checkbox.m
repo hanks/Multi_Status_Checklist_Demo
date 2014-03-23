@@ -8,7 +8,6 @@
     if (self) {
         // set white background color
         [self setBackgroundColor:[UIColor whiteColor]];
-        NSLog(@"%f", self.bounds.size.width);
     }
     return self;
 }
@@ -96,8 +95,6 @@
     
     // Draw the checkmark if self.cancelled ==YES
     if (self.cancelled) {
-        NSLog(@"mark xxxxx");
-        
         CGContextSetLineWidth(context, 2.0);
         CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
         CGContextConcatCTM(context, transform);

@@ -79,18 +79,18 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	
 	
     // check info background view
-    UIView *checkInfoBGView = [[UIView alloc] initWithFrame:CGRectMake(51.0f, 0.0f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    UIView *checkInfoBGView = [[UIView alloc] initWithFrame:CGRectMake(51.0f, 0.0f, CGRectGetWidth(self.bounds) - 51, CGRectGetHeight(self.bounds))];
     self.checkInfoBGView = checkInfoBGView;
     [self.scrollViewContentView addSubview:checkInfoBGView];
     
     // add label to checkInfoBGView
-	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, CGRectGetWidth(self.bounds), 21.0f)];
+	UILabel *scrollViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 11.0f, CGRectGetWidth(self.bounds) - 51, 21.0f)];
 	self.scrollViewLabel = scrollViewLabel;
     [self.scrollViewLabel setFont:[UIFont systemFontOfSize:20.0f]];
 	[self.checkInfoBGView addSubview:scrollViewLabel];
     
     // add completion line to checkInfoBGView
-    UIView *completionLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, CGRectGetWidth(self.bounds), 3)];
+    UIView *completionLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 20.0f, CGRectGetWidth(self.bounds) - 51, 3)];
     [completionLineView setBackgroundColor:[UIColor grayColor]];
     [completionLineView setHidden:YES];
     self.comletionLineView = completionLineView;
@@ -136,19 +136,21 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 	if (scrollView.contentOffset.x < 0.0f) {
 		scrollView.contentOffset = CGPointZero;
 	}
-	
+	NSLog(@"scrollView.contentOffset.x = %f", scrollView.contentOffset.x);
+    NSLog(@"CGRectGetWidth(self.bounds = %f", CGRectGetWidth(self.bounds));
 	self.scrollViewButtonView.frame = CGRectMake(scrollView.contentOffset.x + (CGRectGetWidth(self.bounds) - kCatchWidth), 0.0f, kCatchWidth, CGRectGetHeight(self.bounds));
-	
-	if (scrollView.contentOffset.x >= kCatchWidth) {
-		if (!self.isShowingMenu) {
-			self.isShowingMenu = YES;
-			//[self.delegate cell:self didShowMenu:self.isShowingMenu];
-		}
-	} else if (scrollView.contentOffset.x == 0.0f) {
-		if (self.isShowingMenu) {
-			self.isShowingMenu = NO;
-			//[self.delegate cell:self didShowMenu:self.isShowingMenu];
-		}
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+	if (scrollView.contentOffset.x > kCatchWidth) {
+		targetContentOffset->x = kCatchWidth;
+	} else {
+		*targetContentOffset = CGPointZero;
+		
+		// Need to call this subsequently to remove flickering. Strange.
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[scrollView setContentOffset:CGPointZero animated:YES];
+		});
 	}
 }
 
