@@ -1,5 +1,6 @@
 #import "CustomTableViewController.h"
 #import "CustomCellTableViewCell.h"
+#import "ToDoItem.h"
 
 @interface CustomTableViewController () <CustomCellTableViewCellDelegate>
 
@@ -83,7 +84,9 @@
 - (void)loadInitData {
     self._objects = [[NSMutableArray alloc] init];
     for (int i = 0; i < 6; i++) {
-        [self._objects addObject:[NSString stringWithFormat:@"task_%d", i]];
+        ToDoItem *toDoItem = [[ToDoItem alloc] init];
+        toDoItem.itemName = [NSString stringWithFormat:@"task_name_%d", i];
+        [self._objects addObject:toDoItem];
     }
 }
 
@@ -115,8 +118,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
-    
-    cell.textLabel.text = [self._objects objectAtIndex:indexPath.row];
+    ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
+    cell.textLabel.text = item.itemName;
     cell.delegate = self;
     return cell;
 }
@@ -185,6 +188,13 @@
 
 - (void)cellDidSelectCancel:(CustomCellTableViewCell *)cell {
     
+}
+
+- (void)cell:(CustomCellTableViewCell *)cell isChecked:(BOOL)isChecked {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
+    item.completed = isChecked;
+
 }
 
 @end

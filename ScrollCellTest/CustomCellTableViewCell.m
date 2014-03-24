@@ -12,7 +12,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 @property (nonatomic, weak) UIView *scrollViewContentView;	//The cell content (like the label) goes in this view.
 @property (nonatomic, weak) UIView *scrollViewButtonView;	//Contains our two buttons
 @property (nonatomic, weak) UILabel *scrollViewLabel;
-@property (nonatomic, weak) Checkbox *checkbox;
+
 @property (nonatomic, weak) UIView *checkInfoBGView;
 @property (nonatomic, weak) UIView *comletionLineView;
 @property (nonatomic, assign) BOOL isShowingMenu;
@@ -155,6 +155,8 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 #pragma mark -- CheckboxChangeDelegate Methods
 - (void)changeCellStatusWithChecked:(BOOL)isChecked {
     [self.comletionLineView setHidden:!self.checkbox.checked];
+    
+    [self.delegate cell:self isChecked:isChecked];
     
     if (isChecked) {
         // make cell bgcolor gray
