@@ -44,7 +44,7 @@
     UIView *progressBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), 20)];
     self.progressBarView = progressBarView;
     
-    UILabel *percentageLabel = [[UILabel alloc] initWithFrame:CGRectMake(22.0f, 1.0f, 20.0f, 20.0f)];
+    UILabel *percentageLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 1.0f, 40.0f, 20.0f)];
     percentageLabel.text = @"0%";
     percentageLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
     percentageLabel.textAlignment = NSTextAlignmentRight;
@@ -194,7 +194,28 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
     item.completed = isChecked;
+    [self updateProgressBar];
+}
 
+- (int) countPerCentage {
+    int count = 0;
+    for (int i = 0; i < self._objects.count; i++) {
+        ToDoItem *item = [self._objects objectAtIndex:i];
+        if (item.completed) {
+            count++;
+        }
+    }
+    NSLog(@"completed %d", count);
+    return count  * 100 / self._objects.count;
+}
+
+- (void)updateProgressBar {
+    int percentage = [self countPerCentage];
+    NSLog(@"completed %d%%", percentage);
+   //[self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentage]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentage]];
+    });
 }
 
 @end
