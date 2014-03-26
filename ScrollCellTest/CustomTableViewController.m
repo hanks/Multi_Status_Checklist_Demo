@@ -194,7 +194,9 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
     item.completed = isChecked;
-    [self updateProgressBar];
+    
+    int percentageValue = [self countPerCentage];
+    [self updateProgressBarWith:percentageValue];
 }
 
 - (int) countPerCentage {
@@ -206,15 +208,13 @@
         }
     }
     NSLog(@"completed %d", count);
-    return count  * 100 / self._objects.count;
+    return count * 100 / self._objects.count;
 }
 
-- (void)updateProgressBar {
-    int percentage = [self countPerCentage];
-    NSLog(@"completed %d%%", percentage);
-   //[self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentage]];
+- (void)updateProgressBarWith:(int)percentageValue {
+    //[self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentageValue]];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentage]];
+        [self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentageValue]];
     });
 }
 
