@@ -2,6 +2,8 @@
 #import "CustomCellTableViewCell.h"
 #import "ToDoItem.h"
 
+NSString *const UpdateProgressNotification = @"UpdateProgressNotification";
+
 @interface CustomTableViewController () <CustomCellTableViewCellDelegate>
 
 @property NSMutableArray *_objects;
@@ -72,6 +74,8 @@
     [addNewItemButton addTarget:self action:@selector(userPressedAddButton:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:addNewItemButton];
     self.tableView.tableFooterView = footerView;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateProgressBar) name:UpdateProgressNotification object:nil];
     
 }
 
@@ -186,10 +190,15 @@
     
     [self._objects removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateProgressNotification object:self];
 }
 
 - (void)cellDidSelectCancel:(CustomCellTableViewCell *)cell {
+     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
+    item.completed = cell.checkbox.cancelled;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateProgressNotification object:self];
 }
 
 - (void)cell:(CustomCellTableViewCell *)cell isChecked:(BOOL)isChecked {
@@ -197,15 +206,14 @@
     ToDoItem *item = [self._objects objectAtIndex:indexPath.row];
     item.completed = isChecked;
     
-    int percentageValue = [self countPerCentage];
-    [self updateProgressBarWith:percentageValue];
+    [self updateProgressBar];
 }
 
 - (int) countPerCentage {
     int count = 0;
     for (int i = 0; i < self._objects.count; i++) {
         ToDoItem *item = [self._objects objectAtIndex:i];
-        if (item.completed) {
+        if (item.completed || item.cancelled) {
             count++;
         }
     }
@@ -213,7 +221,8 @@
     return count * 100 / self._objects.count;
 }
 
-- (void)updateProgressBarWith:(int)percentageValue {
+- (void)updateProgressBar {
+    int percentageValue = [self countPerCentage];
     //[self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentageValue]];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentageValue]];

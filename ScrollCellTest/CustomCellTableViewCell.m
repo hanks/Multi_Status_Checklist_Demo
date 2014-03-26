@@ -176,6 +176,7 @@ NSString *const CustomCellShouldHideMenuNotification = @"CustomCellShouldHideMen
 - (void)changeCellStatusWithCancelled:(BOOL)isCancelled {
     [self.comletionLineView setHidden:YES];
     self.checkbox.cancelled = isCancelled;
+    [self.delegate cellDidSelectCancel:self];
     
     if (isCancelled) {
         // make cell background light yellow
