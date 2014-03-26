@@ -7,7 +7,7 @@
 @property NSMutableArray *_objects;
 @property (nonatomic, weak)UIView *progressBarView;
 @property (nonatomic, weak)UILabel *percentageLabel;
-@property (nonatomic, weak)UIView *progressBar;
+@property (nonatomic, weak)UIProgressView *progressBar;
 @property (nonatomic, weak)UIButton *addNewItemButton;
 
 @property int percentageValue;
@@ -51,10 +51,12 @@
     self.percentageLabel = percentageLabel;
     [self.progressBarView addSubview:percentageLabel];
     
-    UIView *progressBar = [[UIView alloc] initWithFrame:CGRectMake(49.0f, 3.0f, CGRectGetWidth(self.tableView.bounds) - 51, 15.f)];
-    [progressBar setBackgroundColor:[self colorFromHexString:@"#D9D9D9"]];
-    [progressBar.layer setCornerRadius:6.0f];
+    UIProgressView *progressBar = [[UIProgressView alloc] initWithFrame:CGRectMake(51.0f, 10.0f, CGRectGetWidth(self.tableView.bounds) - 53, 30.0f)];
+    CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 8.0f);
+    [progressBar setTransform:(transform)];
+    [progressBar setProgressViewStyle:UIProgressViewStyleDefault];
     self.progressBar = progressBar;
+
     [self.progressBarView addSubview:self.progressBar];
     
     self.tableView.tableHeaderView = self.progressBarView;
@@ -63,8 +65,8 @@
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), 49.0f)];
     UIButton *addNewItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
     addNewItemButton.backgroundColor = [self colorFromHexString:@"#848484"];
-    addNewItemButton.frame = CGRectMake(CGRectGetWidth(self.tableView.bounds) / 3, 0.0f, 100.0f, 49.0f);
-    addNewItemButton.layer.cornerRadius = 20.0f;
+    addNewItemButton.frame = CGRectMake(CGRectGetWidth(self.tableView.bounds) / 3, 0.0f, 100.0f, 30.0f);
+    addNewItemButton.layer.cornerRadius = 10.0f;
     [addNewItemButton setTitle:@"Add item" forState:UIControlStateNormal];
     [addNewItemButton setTitleColor:[self colorFromHexString:@"#FFFFFF"] forState:UIControlStateNormal];
     [addNewItemButton addTarget:self action:@selector(userPressedAddButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -216,6 +218,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.percentageLabel setText:[NSString stringWithFormat:@"%d%%", percentageValue]];
     });
+    
+    // update progress bar
+    [self.progressBar setProgress:(float)percentageValue / 100.0 animated:YES];
 }
 
 @end
