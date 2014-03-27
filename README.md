@@ -1,7 +1,7 @@
 Multi Status Checklist Demo
 ===========================
 
-Demo about a multi status checklist, and think about another user experience for traditional checklist.
+A feasibility experiment about a multi status checklist, and think about another user experience for traditional checklist.
 
 ## Why
 I like to use <a href="https://trello.com/">trello</a> to do task management, and one of my favorite is **checklist**.
