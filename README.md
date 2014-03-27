@@ -33,7 +33,7 @@ So based on ideas above, I made this to demonstrate user experience of the check
 ![alt text][demo]
 
 [demo]: 
-https://raw.githubusercontent.com/hanks/Multi_Status_Checklist_Demo/master/ScrollCellTest/demo/demo.gif "demo"
+https://raw.githubusercontent.com/hanks/Multi_Status_Checklist_Demo/master/ScrollCellTest/demo/demo1.gif "demo"
 
 [trello]:
 https://raw.githubusercontent.com/hanks/Multi_Status_Checklist_Demo/master/ScrollCellTest/demo/trello.png "trello"
