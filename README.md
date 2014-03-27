@@ -17,7 +17,7 @@ Like below:
 
 When I use checklist to start a task, I like to do brain storm firstly to write down many targets and ideas, then arrange their priorities, and finish them and check them one by one.  
 
-The problem is some of targets or ideas are hard to implemented actually or there is another solutions to solve the same issues, to make sure the whole task will be done at the 100% progress at the end, to the standard checklist, I have to delete these hard items in the checklist now. **But sometimes I just want to leave them as history records.** 
+The **problem** is some of targets or ideas are hard to implemented actually or there is another solutions to solve the same issues, to make sure the whole task will be done at the 100% progress at the end, to the standard checklist, I have to delete these hard items in the checklist now. **But sometimes I just want to leave them as history records.** 
 
 So I found if there is a third status to represent **cancel**, and not just **check** and **uncheck**, this need might be perfectly meet. It can just saved in the checklist as a memo and do not affect the progress of the whole task. 
 
